@@ -24,22 +24,20 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 def main() -> None:
     # 1. Define the pipeline as a DAG
     orchestrator = DAGOrchestrator()
-    orchestrator.add_node(
-        AgentNode(agent=ResearchAgent())
-    )
-    orchestrator.add_node(
-        AgentNode(agent=AnalysisAgent(), depends_on=["research"])
-    )
+    orchestrator.add_node(AgentNode(agent=ResearchAgent()))
+    orchestrator.add_node(AgentNode(agent=AnalysisAgent(), depends_on=["research"]))
     orchestrator.add_node(
         AgentNode(agent=ReportAgent(), depends_on=["analysis", "research"])
     )
 
     # 2. Run the pipeline
     print("\n--- Running Pipeline ---\n")
-    results = orchestrator.run(context={
-        "query": "AI agent orchestration market trends",
-        "research_depth": "deep",
-    })
+    results = orchestrator.run(
+        context={
+            "query": "AI agent orchestration market trends",
+            "research_depth": "deep",
+        }
+    )
 
     # 3. Print the execution summary
     print("\n" + orchestrator.summary())

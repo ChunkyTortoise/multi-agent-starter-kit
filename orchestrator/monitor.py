@@ -74,8 +74,14 @@ class Monitor:
             status = "PASS" if result.success else "FAIL"
             duration = f"{result.duration_ms:.0f}ms"
             tokens = str(result.token_usage) if result.token_usage else "-"
-            cost = f"${result.estimated_cost_usd:.4f}" if result.estimated_cost_usd else "-"
-            rows.append(f"{name:<20} {status:<8} {duration:<12} {tokens:<10} {cost:<10}")
+            cost = (
+                f"${result.estimated_cost_usd:.4f}"
+                if result.estimated_cost_usd
+                else "-"
+            )
+            rows.append(
+                f"{name:<20} {status:<8} {duration:<12} {tokens:<10} {cost:<10}"
+            )
 
         return "\n".join(rows)
 
@@ -93,7 +99,11 @@ class Monitor:
             end_pos = max(start_pos + 1, int((entry["end"] / max_end) * chart_width))
             bar_char = "#" if entry["success"] else "!"
 
-            bar = "." * start_pos + bar_char * (end_pos - start_pos) + "." * (chart_width - end_pos)
+            bar = (
+                "." * start_pos
+                + bar_char * (end_pos - start_pos)
+                + "." * (chart_width - end_pos)
+            )
             duration = entry["duration_ms"]
             lines.append(f"  {name:<16} |{bar}| {duration:.0f}ms")
 

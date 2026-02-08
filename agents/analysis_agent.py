@@ -56,7 +56,9 @@ class AnalysisAgent(BaseAgent):
         if len(findings) < 3:
             risk_factors.append("Insufficient data sources for robust analysis")
 
-        recommendation = "PROCEED" if avg_relevance > 0.75 and not risk_factors else "REVIEW"
+        recommendation = (
+            "PROCEED" if avg_relevance > 0.75 and not risk_factors else "REVIEW"
+        )
         # --- End replaceable block ---
 
         return {

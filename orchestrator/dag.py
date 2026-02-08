@@ -98,9 +98,13 @@ class DAGOrchestrator:
 
         return order
 
-    def _execute_with_retry(self, node: AgentNode, agent_input: AgentInput) -> AgentOutput:
+    def _execute_with_retry(
+        self, node: AgentNode, agent_input: AgentInput
+    ) -> AgentOutput:
         """Execute an agent with exponential backoff retry."""
-        max_retries = node.retry_count if node.retry_count is not None else node.agent.max_retries
+        max_retries = (
+            node.retry_count if node.retry_count is not None else node.agent.max_retries
+        )
         last_result: AgentOutput | None = None
 
         for attempt in range(max_retries + 1):

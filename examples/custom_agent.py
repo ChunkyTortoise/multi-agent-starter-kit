@@ -29,7 +29,11 @@ class SentimentAgent(BaseAgent):
         total = pos + neg or 1
 
         return {
-            "sentiment": "positive" if pos > neg else "negative" if neg > pos else "neutral",
+            "sentiment": "positive"
+            if pos > neg
+            else "negative"
+            if neg > pos
+            else "neutral",
             "confidence": round(max(pos, neg) / total, 2),
             "positive_count": pos,
             "negative_count": neg,
@@ -43,8 +47,14 @@ if __name__ == "__main__":
 
     dag = DAGOrchestrator()
     dag.add_node(AgentNode(agent=SentimentAgent()))
-    results = dag.run(context={"text": "This product is great and amazing but the support is terrible"})
+    results = dag.run(
+        context={
+            "text": "This product is great and amazing but the support is terrible"
+        }
+    )
 
     print(dag.summary())
     result = results["sentiment"]
-    print(f"\nSentiment: {result.data['sentiment']} (confidence: {result.data['confidence']})")
+    print(
+        f"\nSentiment: {result.data['sentiment']} (confidence: {result.data['confidence']})"
+    )

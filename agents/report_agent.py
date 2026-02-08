@@ -78,7 +78,9 @@ class ReportAgent(BaseAgent):
 
         report_text = ""
         for section in sections:
-            report_text += f"\n{'=' * 40}\n{section['title']}\n{'=' * 40}\n{section['content']}\n"
+            report_text += (
+                f"\n{'=' * 40}\n{section['title']}\n{'=' * 40}\n{section['content']}\n"
+            )
 
         return {
             "query": query,

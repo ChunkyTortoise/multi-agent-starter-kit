@@ -5,4 +5,11 @@ from orchestrator.base_agent import BaseAgent, AgentInput, AgentOutput
 from orchestrator.monitor import Monitor
 
 __version__ = "1.0.0"
-__all__ = ["DAGOrchestrator", "AgentNode", "BaseAgent", "AgentInput", "AgentOutput", "Monitor"]
+__all__ = [
+    "DAGOrchestrator",
+    "AgentNode",
+    "BaseAgent",
+    "AgentInput",
+    "AgentOutput",
+    "Monitor",
+]
