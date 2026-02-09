@@ -7,15 +7,15 @@ Or from the project root:
     python examples/pipeline.py
 """
 
-import sys
 import logging
+import sys
 from pathlib import Path
 
 # Allow running from project root
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from orchestrator import DAGOrchestrator, AgentNode, Monitor
-from agents import ResearchAgent, AnalysisAgent, ReportAgent
+from agents import AnalysisAgent, ReportAgent, ResearchAgent
+from orchestrator import AgentNode, DAGOrchestrator, Monitor
 
 # Configure logging to see agent execution
 logging.basicConfig(level=logging.INFO, format="%(message)s")

@@ -10,7 +10,7 @@ from __future__ import annotations
 import time
 from datetime import datetime, timezone
 
-from orchestrator.base_agent import BaseAgent, AgentInput
+from orchestrator.base_agent import AgentInput, BaseAgent
 
 
 class ReportAgent(BaseAgent):

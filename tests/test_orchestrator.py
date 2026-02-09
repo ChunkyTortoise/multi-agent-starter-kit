@@ -8,14 +8,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from orchestrator import (
-    DAGOrchestrator,
-    AgentNode,
-    BaseAgent,
     AgentInput,
+    AgentNode,
     AgentOutput,
+    BaseAgent,
+    DAGOrchestrator,
     Monitor,
 )
-
 
 # --- Test agents ---
 

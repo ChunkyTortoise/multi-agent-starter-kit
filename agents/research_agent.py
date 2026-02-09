@@ -10,7 +10,7 @@ from __future__ import annotations
 import hashlib
 import time
 
-from orchestrator.base_agent import BaseAgent, AgentInput
+from orchestrator.base_agent import AgentInput, BaseAgent
 
 
 class ResearchAgent(BaseAgent):

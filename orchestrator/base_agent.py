@@ -10,8 +10,8 @@ Extend this class to build any agent. Provides:
 
 from __future__ import annotations
 
-import time
 import logging
+import time
 from abc import ABC, abstractmethod
 from typing import Any
 

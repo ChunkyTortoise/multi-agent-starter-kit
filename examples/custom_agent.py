@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from orchestrator import BaseAgent, AgentInput, DAGOrchestrator, AgentNode
+from orchestrator import AgentInput, AgentNode, BaseAgent, DAGOrchestrator
 
 
 class SentimentAgent(BaseAgent):

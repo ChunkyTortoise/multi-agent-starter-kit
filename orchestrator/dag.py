@@ -10,12 +10,12 @@ Defines agent pipelines as a DAG. Handles:
 
 from __future__ import annotations
 
-import time
 import logging
+import time
 from dataclasses import dataclass, field
 from typing import Any
 
-from orchestrator.base_agent import BaseAgent, AgentInput, AgentOutput
+from orchestrator.base_agent import AgentInput, AgentOutput, BaseAgent
 
 logger = logging.getLogger(__name__)
 
