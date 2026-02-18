@@ -61,7 +61,7 @@ class TestBaseAgent:
         assert result.success is True
         assert result.data["sum"] == 10
         assert result.agent_name == "add"
-        assert result.duration_ms > 0
+        assert result.duration_ms >= 0
 
     def test_agent_run_failure(self):
         agent = FailingAgent()

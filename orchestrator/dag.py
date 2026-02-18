@@ -19,6 +19,18 @@ from orchestrator.base_agent import AgentInput, AgentOutput, BaseAgent
 
 logger = logging.getLogger(__name__)
 
+# Avoid circular import: HITLGate is referenced by string type only at class
+# definition time, imported lazily when actually used.
+_HITLGate = None
+
+
+def _get_hitl_class():
+    global _HITLGate
+    if _HITLGate is None:
+        from orchestrator.hitl import HITLGate  # noqa: PLC0415
+        _HITLGate = HITLGate
+    return _HITLGate
+
 
 @dataclass
 class AgentNode:
@@ -30,6 +42,8 @@ class AgentNode:
         optional: If True, failure won't halt downstream agents.
         retry_count: Override the agent's default max_retries.
         retry_delay: Base delay in seconds between retries (doubles each attempt).
+        hitl_gate: Optional HITLGate to pause for human approval after this
+                   agent succeeds. Rejection marks the result as failed.
     """
 
     agent: BaseAgent
@@ -37,6 +51,7 @@ class AgentNode:
     optional: bool = False
     retry_count: int | None = None
     retry_delay: float = 1.0
+    hitl_gate: Any = None  # HITLGate | None — typed as Any to avoid circular import
 
     @property
     def name(self) -> str:
@@ -174,6 +189,22 @@ class DAGOrchestrator:
             step_start = time.perf_counter()
             result = self._execute_with_retry(node, agent_input)
             step_end = time.perf_counter()
+
+            # HITL gate: pause for human approval if configured
+            if result.success and node.hitl_gate is not None:
+                approval = node.hitl_gate.request_approval(
+                    context=context,
+                    agent_output=result.data,
+                )
+                from orchestrator.hitl import ApprovalStatus  # noqa: PLC0415
+                if approval.status == ApprovalStatus.REJECTED:
+                    result = AgentOutput(
+                        agent_name=agent_name,
+                        success=False,
+                        error=f"HITL gate '{node.hitl_gate.name}' rejected by "
+                              f"'{approval.approver}': {approval.notes}",
+                        duration_ms=result.duration_ms,
+                    )
 
             self._results[agent_name] = result
             self._timeline.append(
